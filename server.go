@@ -11,7 +11,26 @@ func home (w http.ResponseWriter, r *http.Request) { // those two arguments requ
 	fmt.Println("Home!")
 }
 
-func todos(w http.ResponseWriter, r *http.Request) {
+// some linters need a comment above each type
+// Todo is a todo with a title and content
+type Todos struct { // typically at top of file
+	Title string
+	Content string
+}
+
+// PageVariables are variables sent to the html template
+type PageVariables struct{
+	PageTitle string
+	PageTodos []Todos
+}
+
+var todos []Todos
+
+func getTodos(w http.ResponseWriter, r *http.Request) {
+	pageVariables := PageVariables{
+		PageTitle: "Get To Dos",
+		PageTodos: todos,
+	}
 	t, err := template.ParseFiles("todos.html")
 
 	if err != nil { // handle error
@@ -19,12 +38,13 @@ func todos(w http.ResponseWriter, r *http.Request) {
 		log.Print("Template parsing error:", err)
 	}
 
-	err = t.Execute(w, nil) // applies parsed template to specified data obj
+	// err = t.Execute(w, nil) // applies parsed template to specified data obj. Inital build with nil
+	err = t.Execute(w, pageVariables)
 }
 
 func main() {
 	http.HandleFunc("/", home)
-	http.HandleFunc("/todos/", todos)
+	http.HandleFunc("/todos/", getTodos)
 	fmt.Println("Server is running on port :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil)) // if something goes wrong, handle
 }
