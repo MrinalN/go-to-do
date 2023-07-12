@@ -13,7 +13,7 @@ Note: form data does not persist
 
 ## Credits
 
-Offshoot of live coding exercise on Go for [Javascript Developers](https://frontendmasters.com/courses/go-for-js-devs/) taught by Brenna Martenson
+Offshoot of coding exercise on [Go for Javascript Developers](https://frontendmasters.com/courses/go-for-js-devs/) taught by Brenna Martenson
 
 
 _Updated Jul '23_
